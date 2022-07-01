@@ -1,5 +1,6 @@
 package ru.netology.manager;
 
+import ru.netology.NotFoundException;
 import ru.netology.domain.Product;
 
 public class ProductManager {
@@ -20,6 +21,9 @@ public class ProductManager {
     }
 
     public Product[] removeById(int id) {
+        if (findById(id) == null) {
+            throw new NotFoundException("Element with id: " + id + " not found");
+        }
         int length = products.length - 1;
         Product[] tmp = new Product[length];
         int index = 0;
@@ -56,5 +60,12 @@ public class ProductManager {
         }
     }
 
-
+    public Product findById(int id) {
+        for (Product product : findAll()) {
+            if (product.getId() == id) {
+                return product;
+            }
+        }
+        return null;
+    }
 }

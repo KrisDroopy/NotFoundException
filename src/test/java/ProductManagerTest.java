@@ -1,6 +1,7 @@
 import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.Test;
+import ru.netology.NotFoundException;
 import ru.netology.domain.Book;
 import ru.netology.domain.Product;
 import ru.netology.domain.Smartphone;
@@ -66,5 +67,17 @@ public class ProductManagerTest {
         Product[] expected = {one, two, four};
 
         assertArrayEquals(actual, expected);
+    }
+
+    @Test
+    public void shouldRemoveByIdWithNotFoundException() {
+        manager.save(one);
+        manager.save(two);
+        manager.save(three);
+        manager.save(four);
+
+        assertThrows(NotFoundException.class, () -> {
+            manager.removeById(5);
+        });
     }
 }
